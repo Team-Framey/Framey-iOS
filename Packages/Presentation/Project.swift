@@ -7,6 +7,7 @@ let project = Project.make(
     .presentation(
       name: "PresentationCore",
       dependencies: [
+        .project(target: "DesignSystem", path: "../Shared"),
         .project(target: "GlobalThirdPartyLibrary", path: "../Shared"),
       ]
     ),
