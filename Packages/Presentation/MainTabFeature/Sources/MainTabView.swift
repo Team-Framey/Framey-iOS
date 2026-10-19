@@ -10,5 +10,6 @@ public struct MainTabView: View {
 
   public var body: some View {
     Text("MainTab")
+      .typography(.displaySB36)
   }
 }

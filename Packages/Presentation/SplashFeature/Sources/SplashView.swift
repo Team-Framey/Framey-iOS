@@ -12,6 +12,7 @@ public struct SplashView: View {
   public var body: some View {
     VStack {
       Text("Splash")
+        .typography(.displaySB36)
 
       ProgressView()
         .progressViewStyle(.circular)
