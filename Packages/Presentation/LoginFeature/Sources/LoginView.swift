@@ -12,6 +12,7 @@ public struct LoginView: View {
   public var body: some View {
     VStack {
       Text("Login")
+        .typography(.displaySB36)
 
       Button {
         send(.startTapped)
