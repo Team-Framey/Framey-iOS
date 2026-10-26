@@ -13,6 +13,7 @@ public struct LoginView: View {
     VStack {
       Text("Login")
         .typography(.displaySB36)
+        .foregroundStyle(.framey(.gray900))
 
       Button {
         send(.startTapped)
@@ -20,7 +21,7 @@ public struct LoginView: View {
         // TODO: - 제거 필요
         Text("시작하기")
       }
-      .buttonStyle(.borderedProminent)
+      .buttonStyle(.frameyPrimary)
     }
   }
 }
