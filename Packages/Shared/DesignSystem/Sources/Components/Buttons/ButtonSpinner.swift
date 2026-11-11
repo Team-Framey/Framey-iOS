@@ -1,6 +1,6 @@
 import SwiftUI
 
-public struct LoadingDots: View {
+public struct ButtonSpinner: View {
   @State private var activeIndex = 0
 
   private let color: Color
@@ -24,6 +24,7 @@ public struct LoadingDots: View {
           .fill(color)
           .frame(width: size.width, height: size.height)
           .opacity(activeIndex == index ? 1 : opacity)
+          .offset(y: activeIndex == index ? -(size.height + 2) : 0)
       }
     }
     .task {

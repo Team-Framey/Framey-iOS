@@ -22,7 +22,7 @@ public struct FrameyPrimaryButtonStyle: ButtonStyle {
       .padding(.vertical, verticalPadding)
       .overlay {
         if isLoading {
-          LoadingDots()
+          ButtonSpinner()
             .allowsHitTesting(false)
         }
       }

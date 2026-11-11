@@ -9,7 +9,18 @@ public struct MainTabView: View {
   }
 
   public var body: some View {
-    Text("MainTab")
-      .typography(.displaySB36)
+    VStack {
+      Text("MainTab")
+        .typography(.displaySB36)
+
+      Button {
+
+      } label: {
+        Text("Hello")
+      }
+      .buttonStyle(.frameyPrimary)
+      .isLoading(true)
+
+    }
   }
 }
