@@ -38,6 +38,8 @@ private final class Provider {
       return
     }
     showTask?.cancel()
+    dismissTask?.cancel()
+    dismissTask = nil
 
     showTask = Task { @MainActor in
       if toastWindow != nil {
@@ -77,7 +79,13 @@ private final class Provider {
   }
 
   private func dismiss() async {
+    guard let targetWindow = toastWindow else { return }
+
     await animator?.dismiss()
+
+    guard !Task.isCancelled, toastWindow === targetWindow else {
+      return
+    }
     removeCurrentImmediately()
   }
 
