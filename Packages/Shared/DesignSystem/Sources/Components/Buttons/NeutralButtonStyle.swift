@@ -16,8 +16,8 @@ public struct FrameyNeutralButtonStyle: ButtonStyle {
     let isPressed = configuration.isPressed && isEnabled
     return configuration.label
       .typography(typography)
-      .opacity(isLoading ? 0 : 1)
       .foregroundStyle(.framey(foregroundColor))
+      .opacity(isLoading ? 0 : 1)
       .padding(.horizontal, horizontalPadding)
       .padding(.vertical, verticalPadding)
       .overlay {
