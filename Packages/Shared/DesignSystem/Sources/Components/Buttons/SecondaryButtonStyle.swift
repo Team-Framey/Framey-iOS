@@ -2,11 +2,10 @@ import SwiftUI
 
 // TODO: - 버튼 컴포넌트 관련 미흡한 부분 추후 반영
 // - horizontal padding
-// - Size에 따른 background color 변경
-// - Pressed 정의
-// - Loading 정의
 public struct FrameySecondaryButtonStyle: ButtonStyle {
   @Environment(\.isEnabled) private var isEnabled
+  @Environment(\.isLoading) private var isLoading
+
   private let size: FrameyButtonSize
 
   public init(size: FrameyButtonSize) {
@@ -17,12 +16,18 @@ public struct FrameySecondaryButtonStyle: ButtonStyle {
     let isPressed = configuration.isPressed && isEnabled
     return configuration.label
       .typography(typography)
+      .opacity(isLoading ? 0 : 1)
       .foregroundStyle(.framey(foregroundColor))
       .padding(.horizontal, horizontalPadding)
       .padding(.vertical, verticalPadding)
-      .background(.framey(backgroundColor))
+      .overlay {
+        if isLoading {
+          ButtonSpinner()
+            .allowsHitTesting(false)
+        }
+      }
+      .background(.framey(backgroundColor(isPressed)))
       .cornerRadius(radius)
-      .scaleEffect(isPressed ? 0.97 : 1)
       .animation(
         .interactiveSpring(
           response: 0.22,
@@ -65,13 +70,10 @@ public struct FrameySecondaryButtonStyle: ButtonStyle {
   }
 
   private var foregroundColor: FrameyColor {
-    return .gray900
+    return isEnabled ? .gray900 : .gray400
   }
 
-  private var backgroundColor: FrameyColor {
-    guard isEnabled else {
-      return .gray400
-    }
-    return .gray200
+  private func backgroundColor(_ isPressed: Bool) -> FrameyColor {
+    return isPressed ? .gray300 : .gray200
   }
 }
