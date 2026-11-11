@@ -1,0 +1,26 @@
+{% macro hasImages assets %}{% for asset in assets %}{% if asset.type == "image" %}1{% elif asset.items %}{% call hasImages asset.items %}{% endif %}{% endfor %}{% endmacro %}
+{% macro imageCases assets %}
+{% for asset in assets %}
+{% if asset.type == "image" %}
+  case {{asset.name|swiftIdentifier:"pretty"|lowerFirstWord|escapeReservedKeywords}} = "{{asset.value}}"
+{% elif asset.items %}
+{% call imageCases asset.items %}
+{% endif %}
+{% endfor %}
+{% endmacro %}
+{% set hasImage %}{% for catalog in catalogs %}{% call hasImages catalog.assets %}{% endfor %}{% endset %}
+{% if hasImage %}
+import SwiftUI
+
+public enum {{param.name}}Asset: String, CaseIterable, Sendable {
+{% for catalog in catalogs %}
+{% call imageCases catalog.assets %}
+{% endfor %}
+
+  public var image: Image {
+    Image(rawValue, bundle: .module)
+  }
+}
+{% else %}
+public enum {{param.name}}Asset: CaseIterable, Sendable {}
+{% endif %}

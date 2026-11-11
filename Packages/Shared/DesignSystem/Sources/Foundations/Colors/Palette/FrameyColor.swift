@@ -4,6 +4,8 @@ public enum FrameyColor: Hashable, Sendable {
 
   // MARK: - Static
 
+  /// Opacity 0%
+  case clear
   /// #FFFFFF
   case white
   /// #090A0A
@@ -67,6 +69,7 @@ public enum FrameyColor: Hashable, Sendable {
 
   public var color: Color {
     switch self {
+    case .clear: .hex(0xFFFFFF, opacity: 0)
     case .white: .hex(0xFFFFFF)
     case .black: .hex(0x090A0A)
     case .black10: .hex(0x090A0A, opacity: 0.1)

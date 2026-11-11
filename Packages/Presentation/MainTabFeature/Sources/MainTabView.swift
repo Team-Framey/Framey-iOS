@@ -1,26 +1,41 @@
 import PresentationCore
 import SwiftUI
 
+@ViewAction(for: MainTabFeature.self)
 public struct MainTabView: View {
-  public let store: StoreOf<MainTabFeature>
+  @Bindable public var store: StoreOf<MainTabFeature>
 
   public init(store: StoreOf<MainTabFeature>) {
     self.store = store
   }
 
   public var body: some View {
-    VStack {
-      Text("MainTab")
-        .typography(.displaySB36)
+    Group {
+      switch store.current {
+      case .home:
+        Text("Home")
+          .typography(.displaySB32)
+          .foregroundStyle(.framey(.black))
 
-      Button {
+      case .library:
+        Text("Library")
+          .typography(.displaySB32)
+          .foregroundStyle(.framey(.black))
 
-      } label: {
-        Text("Hello")
+      case .profile:
+        Text("Profile")
+          .typography(.displaySB32)
+          .foregroundStyle(.framey(.black))
       }
-      .buttonStyle(.frameyPrimary)
-      .isLoading(true)
-
+    }
+    .frame(maxWidth: .infinity, maxHeight: .infinity)
+    .ignoresSafeArea()
+    .background(.white)
+    .overlay(alignment: .bottom) {
+      BottomNavigation(
+        items: MainTab.allCases,
+        selectedItem: $store.current
+      )
     }
   }
 }
