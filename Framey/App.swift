@@ -1,4 +1,6 @@
 import AppFeature
+// TODO: - 로그인 설정 후 제거
+import LoginUseCase
 import PresentationCore
 import SwiftUI
 
@@ -9,6 +11,9 @@ struct FrameyApp: App {
   init() {
     self.store = Store(initialState: AppFeature.State()) {
       AppFeature()
+    } withDependencies: {
+      // TODO: - 로그인 설정 후 제거
+      $0[LoginUseCase.self] = .mockValue
     }
   }
 

@@ -45,4 +45,23 @@ extension LoginUseCase: DependencyKey {
       return try await repository.kakaoLoginRequest()
     }
   )
+
+  // TODO: - 로그인 설정 후 제거
+  
+  public static let mockValue = LoginUseCase(
+    appleLoginRequest: {
+      return .init { continuation in
+        continuation.yield(.success("mock token"))
+      }
+    },
+    appleLoginOnCompletion: { _ in
+      return .signInCompleted
+    },
+    googleLoginRequest: {
+      return .signInCompleted
+    },
+    kakaoLoginRequest: {
+      return .signInCompleted
+    }
+  )
 }
