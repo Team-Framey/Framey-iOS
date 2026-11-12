@@ -1,3 +1,4 @@
+import LoginUseCase
 import PresentationCore
 
 @Reducer
@@ -10,10 +11,16 @@ public struct LoginFeature {
   @CasePathable
   public enum Action: ViewAction {
     case delegate(Delegate)
+    case local(Local)
     case view(View)
 
     public enum Delegate {
+      case signInCompleted
       case signInSkipped
+    }
+
+    public enum Local {
+      case signInResponse(Result<AuthenticationPhase?, Error>)
     }
 
     public enum View {
@@ -24,6 +31,12 @@ public struct LoginFeature {
     }
   }
 
+  private enum CancelID {
+    case apple
+  }
+
+  @Dependency(LoginUseCase.self) private var useCase
+
   public init() {}
 
   public var body: some ReducerOf<Self> {
@@ -32,9 +45,34 @@ public struct LoginFeature {
       case .delegate:
         return .none
 
-      case .view(.appleLoginTapped):
-        // TODO: - Apple Login 진행
+      case let .local(.signInResponse(.success(phase))):
+        guard let phase else {
+          // Phase가 없는 경우 로그인 취소
+          return .none
+        }
+
+        // TODO: - Phase를 따른 케이스 추가 + 로그인 처리
+        switch phase {
+        case .signInCompleted:
+          return .send(.delegate(.signInCompleted))
+
+        case .termsAgreementRequired:
+          return .send(.delegate(.signInCompleted))
+        }
+
+      case let .local(.signInResponse(.failure(error))):
+        // TODO: - 로그인 실패 케이스 추가 (Toast or Modal ...)
+        print(error.localizedDescription)
         return .none
+
+      case .view(.appleLoginTapped):
+        return .run { [useCase] send in
+          for await result in await useCase.appleLoginRequest() {
+            await send(.local(.signInResponse(Result {
+              try await useCase.appleLoginOnCompletion(result)
+            })))
+          }
+        }.cancellable(id: CancelID.apple, cancelInFlight: true)
 
       case .view(.googleLoginTapped):
         // TODO: - Google Login 진행
