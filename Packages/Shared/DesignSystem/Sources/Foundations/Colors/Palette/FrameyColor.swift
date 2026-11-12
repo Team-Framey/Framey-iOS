@@ -67,6 +67,11 @@ public enum FrameyColor: Hashable, Sendable {
   /// #FFF4BF
   case yellow
 
+  // MARK: - ETC
+
+  /// #FEE500
+  case kakaoBG
+
   public var color: Color {
     switch self {
     case .clear: .hex(0xFFFFFF, opacity: 0)
@@ -94,6 +99,7 @@ public enum FrameyColor: Hashable, Sendable {
     case .primary800: .hex(0x005984)
     case .primary900: .hex(0x003D5C)
     case .yellow: .hex(0xFFF4BF)
+    case .kakaoBG: .hex(0xFEE500)
     }
   }
 }

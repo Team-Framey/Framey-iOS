@@ -13,12 +13,14 @@ public struct LoginFeature {
     case view(View)
 
     public enum Delegate {
-      case signInCompleted
+      case signInSkipped
     }
 
     public enum View {
-      // TODO: - 제거 필요
-      case startTapped
+      case appleLoginTapped
+      case googleLoginTapped
+      case kakaoLoginTapped
+      case skipTapped
     }
   }
 
@@ -30,9 +32,21 @@ public struct LoginFeature {
       case .delegate:
         return .none
 
-      case .view(.startTapped):
+      case .view(.appleLoginTapped):
+        // TODO: - Apple Login 진행
+        return .none
+
+      case .view(.googleLoginTapped):
+        // TODO: - Google Login 진행
+        return .none
+
+      case .view(.kakaoLoginTapped):
+        // TODO: - Kakao Login 진행
+        return .none
+
+      case .view(.skipTapped):
         return .run { send in
-          await send(.delegate(.signInCompleted), animation: .default)
+          await send(.delegate(.signInSkipped), animation: .default)
         }
       }
     }

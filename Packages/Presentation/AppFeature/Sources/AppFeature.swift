@@ -53,7 +53,7 @@ public struct AppFeature {
       return .none
     }
     switch action {
-    case .signInCompleted:
+    case .signInSkipped:
       state.content = .mainTab(.init())
       return .none
     }
