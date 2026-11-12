@@ -8,4 +8,8 @@ extension Error {
   public var isAppleLoginCancelled: Bool {
     code == 1001
   }
+
+  public var isGoogleSignInCancelled: Bool {
+    code == -5
+  }
 }

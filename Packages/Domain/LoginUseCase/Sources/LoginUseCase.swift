@@ -5,6 +5,7 @@ internal import LoginRepository
 public struct LoginUseCase: Sendable {
   public var appleLoginRequest: @Sendable () async -> AsyncStream<Result<String, Error>> = { .finished }
   public var appleLoginOnCompletion: @Sendable (Result<String, Error>) async throws -> AuthenticationPhase?
+  public var googleLoginRequest: @Sendable () async throws -> AuthenticationPhase?
 }
 
 extension LoginUseCase: DependencyKey {
@@ -32,6 +33,11 @@ extension LoginUseCase: DependencyKey {
       case let .failure(error):
         return try await repository.appleLoginOnCompletion(.failure(error))
       }
+    },
+    googleLoginRequest: {
+      // TODO: - ClientID 추가
+      @Dependency(SocialLoginRepository.self) var repository
+      return try await repository.googleLoginRequest(clientID: "Client ID 추가")
     }
   )
 }
