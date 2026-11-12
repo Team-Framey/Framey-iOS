@@ -35,6 +35,7 @@ let project = Project.make(
       name: "LoginFeature",
       dependencies: [
         .target(name: "PresentationCore"),
+        .project(target: "LoginUseCase", path: "../Domain")
       ]
     ),
     .presentation(
