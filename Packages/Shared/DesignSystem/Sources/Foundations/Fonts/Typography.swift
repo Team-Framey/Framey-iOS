@@ -40,7 +40,7 @@ extension Typography {
   public static let captionSB12 = semibold(12)
   public static let captionM12 = medium(12)
   public static let captionR12 = regular(12)
-  public static let captionM10 = medium(12)
+  public static let captionM10 = medium(10)
 }
 
 extension Typography {
