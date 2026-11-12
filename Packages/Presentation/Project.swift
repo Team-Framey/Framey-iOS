@@ -20,7 +20,13 @@ let project = Project.make(
       ]
     ),
     .presentation(
-      name: "SplashFeature",
+      name: "HomeFeature",
+      dependencies: [
+        .target(name: "PresentationCore"),
+      ]
+    ),
+    .presentation(
+      name: "LibraryFeature",
       dependencies: [
         .target(name: "PresentationCore"),
       ]
@@ -33,6 +39,20 @@ let project = Project.make(
     ),
     .presentation(
       name: "MainTabFeature",
+      dependencies: [
+        .target(name: "HomeFeature"),
+        .target(name: "LibraryFeature"),
+        .target(name: "ProfileFeature"),
+      ]
+    ),
+    .presentation(
+      name: "ProfileFeature",
+      dependencies: [
+        .target(name: "PresentationCore"),
+      ]
+    ),
+    .presentation(
+      name: "SplashFeature",
       dependencies: [
         .target(name: "PresentationCore"),
       ]

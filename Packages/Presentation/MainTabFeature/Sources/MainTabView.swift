@@ -1,4 +1,7 @@
+import HomeFeature
+import LibraryFeature
 import PresentationCore
+import ProfileFeature
 import SwiftUI
 
 @ViewAction(for: MainTabFeature.self)
@@ -13,23 +16,21 @@ public struct MainTabView: View {
     Group {
       switch store.current {
       case .home:
-        Text("Home")
-          .typography(.displaySB32)
-          .foregroundStyle(.framey(.black))
+        HomeView(
+          store: store.scope(\.home, action: \.tab.home)
+        )
 
       case .library:
-        Text("Library")
-          .typography(.displaySB32)
-          .foregroundStyle(.framey(.black))
+        LibraryView(
+          store: store.scope(\.library, action: \.tab.library)
+        )
 
       case .profile:
-        Text("Profile")
-          .typography(.displaySB32)
-          .foregroundStyle(.framey(.black))
+        ProfileView(
+          store: store.scope(\.profile, action: \.tab.profile)
+        )
       }
     }
-    .frame(maxWidth: .infinity, maxHeight: .infinity)
-    .ignoresSafeArea()
     .background(.white)
     .overlay(alignment: .bottom) {
       BottomNavigation(
