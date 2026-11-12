@@ -21,6 +21,7 @@ let project = Project.make(
       product: .staticFramework,
       dependencies: [
         .target(name: "DomainCore"),
+        .project(target: "LoginRepository", path: "../Data")
       ]
     ),
   ]
