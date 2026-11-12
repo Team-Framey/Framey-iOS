@@ -32,6 +32,8 @@ public struct LoginView: View {
         send(.skipTapped)
       }
     }
+    // TODO: - 로딩 관련 UI (전체 overlay) 추가
+    .isLoading(store.isLoading)
     .frame(maxWidth: .infinity, maxHeight: .infinity)
     .background(.framey(.white))
   }
