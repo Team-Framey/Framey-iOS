@@ -10,18 +10,31 @@ public struct LoginView: View {
   }
 
   public var body: some View {
-    VStack {
-      Text("Login")
-        .typography(.displaySB36)
-        .foregroundStyle(.framey(.gray900))
+    VStack(spacing: .s45) {
+      LoginHeader()
 
-      Button {
-        send(.startTapped)
-      } label: {
-        // TODO: - 제거 필요
-        Text("시작하기")
+      VStack(spacing: .s20) {
+        AppleLoginButton {
+          send(.appleLoginTapped)
+        }
+
+        GoogleLoginButton {
+          send(.googleLoginTapped)
+        }
+
+        KakaoLoginButton {
+          send(.kakaoLoginTapped)
+        }
       }
-      .buttonStyle(.frameyPrimary)
+      .padding(.horizontal, .s20)
+
+      SkipLoginButton {
+        send(.skipTapped)
+      }
     }
+    // TODO: - 로딩 관련 UI (전체 overlay) 추가
+    .isLoading(store.isLoading)
+    .frame(maxWidth: .infinity, maxHeight: .infinity)
+    .background(.framey(.white))
   }
 }

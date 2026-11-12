@@ -56,6 +56,10 @@ public struct AppFeature {
     case .signInCompleted:
       state.content = .mainTab(.init())
       return .none
+      
+    case .signInSkipped:
+      state.content = .mainTab(.init())
+      return .none
     }
   }
 

@@ -7,6 +7,7 @@ let project = Project.make(
     .presentation(
       name: "PresentationCore",
       dependencies: [
+        .project(target: "Entity", path: "../Domain"),
         .project(target: "DesignSystem", path: "../Shared"),
         .project(target: "GlobalThirdPartyLibrary", path: "../Shared"),
       ]
@@ -35,6 +36,7 @@ let project = Project.make(
       name: "LoginFeature",
       dependencies: [
         .target(name: "PresentationCore"),
+        .project(target: "LoginUseCase", path: "../Domain")
       ]
     ),
     .presentation(

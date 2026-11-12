@@ -9,6 +9,7 @@ public enum FrameySpacing: Int, Hashable, Sendable {
   case s24 = 24
   case s32 = 32
   case s40 = 40
+  case s45 = 45
   case s48 = 48
   case s56 = 56
   case s64 = 64

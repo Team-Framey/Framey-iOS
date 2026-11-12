@@ -25,6 +25,23 @@ extension Target {
     )
   }
 
+  public static func domain(
+    name: String,
+    product: Product,
+    infoPlist: InfoPlist = .default,
+    resources: ResourceFileElements? = nil,
+    dependencies: [TargetDependency] = []
+  ) -> Target {
+    .make(
+      name: name,
+      product: product,
+      bundleId: "com.framey.Domain.\(name)",
+      sources: ["\(name)/Sources/**"],
+      resources: resources,
+      dependencies: dependencies
+    )
+  }
+
   public static func presentation(
     name: String,
     resources: ResourceFileElements? = nil,
