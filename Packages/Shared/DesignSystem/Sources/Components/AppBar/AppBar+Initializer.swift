@@ -36,6 +36,16 @@ extension AppBar {
   }
 
   public init(
+    leading: () -> Leading
+  ) where Center == EmptyView, Trailing == EmptyView {
+    self.init(
+      leading: leading,
+      center: { EmptyView() },
+      trailing: { EmptyView() }
+    )
+  }
+
+  public init(
     center: () -> Center
   ) where Leading == EmptyView, Trailing == EmptyView {
     self.init(
