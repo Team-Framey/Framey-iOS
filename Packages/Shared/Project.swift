@@ -21,7 +21,10 @@ let project = Project.make(
       product: .staticFramework,
       dependencies: [
         .external(name: "ComposableArchitecture"),
-        .external(name: "GoogleSignIn")
+        .external(name: "GoogleSignIn"),
+        .external(name: "KakaoSDKAuth"),
+        .external(name: "KakaoSDKCommon"),
+        .external(name: "KakaoSDKUser"),
       ]
     ),
   ]

@@ -7,6 +7,7 @@ public struct SocialLoginRepository: Sendable {
   public var appleLoginRequest: @Sendable () async -> AsyncStream<AppleLoginAction> = { .finished }
   public var appleLoginOnCompletion: @Sendable (Result<AppleLoginAuthorization, Error>) async throws -> AuthenticationPhase?
   public var googleLoginRequest: @Sendable (_ clientID: String) async throws -> AuthenticationPhase?
+  public var kakaoLoginRequest: @Sendable () async throws -> AuthenticationPhase?
 }
 
 extension SocialLoginRepository: DependencyKey {
@@ -26,6 +27,10 @@ extension SocialLoginRepository: DependencyKey {
         throw Unimplemented("에러 케이스 추가")
       }
       return try await client.request(clientID: clientID, viewController: viewController)
+    },
+    kakaoLoginRequest: {
+      @Dependency(KakaoLoginClient.self) var clinet
+      return try await clinet.request()
     }
   )
 }

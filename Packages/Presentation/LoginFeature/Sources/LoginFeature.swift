@@ -34,6 +34,7 @@ public struct LoginFeature {
   private enum CancelID {
     case apple
     case google
+    case kakao
   }
 
   @Dependency(LoginUseCase.self) private var useCase
@@ -83,8 +84,11 @@ public struct LoginFeature {
         }.cancellable(id: CancelID.google, cancelInFlight: true)
 
       case .view(.kakaoLoginTapped):
-        // TODO: - Kakao Login 진행
-        return .none
+        return .run { [useCase] send in
+          await send(.local(.signInResponse(Result {
+            try await useCase.kakaoLoginRequest()
+          })))
+        }.cancellable(id: CancelID.kakao, cancelInFlight: true)
 
       case .view(.skipTapped):
         return .run { send in

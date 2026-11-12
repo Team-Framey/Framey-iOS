@@ -6,6 +6,7 @@ public struct LoginUseCase: Sendable {
   public var appleLoginRequest: @Sendable () async -> AsyncStream<Result<String, Error>> = { .finished }
   public var appleLoginOnCompletion: @Sendable (Result<String, Error>) async throws -> AuthenticationPhase?
   public var googleLoginRequest: @Sendable () async throws -> AuthenticationPhase?
+  public var kakaoLoginRequest: @Sendable () async throws -> AuthenticationPhase?
 }
 
 extension LoginUseCase: DependencyKey {
@@ -38,6 +39,10 @@ extension LoginUseCase: DependencyKey {
       // TODO: - ClientID 추가
       @Dependency(SocialLoginRepository.self) var repository
       return try await repository.googleLoginRequest(clientID: "Client ID 추가")
+    },
+    kakaoLoginRequest: {
+      @Dependency(SocialLoginRepository.self) var repository
+      return try await repository.kakaoLoginRequest()
     }
   )
 }

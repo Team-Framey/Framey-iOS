@@ -16,6 +16,10 @@ let package = Package(
       exact: "10.1.0"
     ),
     .package(
+      url: "https://github.com/kakao/kakao-ios-sdk",
+      exact: "2.30.0"
+    ),
+    .package(
       url: "https://github.com/pointfreeco/xctest-dynamic-overlay",
       from: "1.13.0"
     ),
