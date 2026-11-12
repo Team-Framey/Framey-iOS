@@ -12,3 +12,31 @@ extension View {
     padding(edges, spacing.value)
   }
 }
+
+extension VStack {
+  @inlinable public init(
+    alignment: HorizontalAlignment = .center,
+    spacing: FrameySpacing,
+    @ContentBuilder content: () -> Content
+  ) {
+    self.init(
+      alignment: alignment,
+      spacing: spacing.value,
+      content: content
+    )
+  }
+}
+
+extension HStack {
+  @inlinable public init(
+    alignment: VerticalAlignment = .center,
+    spacing: FrameySpacing,
+    @ContentBuilder content: () -> Content
+  ) {
+    self.init(
+      alignment: alignment,
+      spacing: spacing.value,
+      content: content
+    )
+  }
+}
