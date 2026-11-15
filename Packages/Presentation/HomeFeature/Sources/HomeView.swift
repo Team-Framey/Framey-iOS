@@ -20,9 +20,11 @@ public struct HomeView: View {
 
       heroView()
         .padding(.horizontal, .s20)
+        .padding(.bottom, 44)
 
-      Spacer()
+      ThemeCarousel()
     }
+    .frame(maxHeight: .infinity, alignment: .top)
     .frameyGradientBackground()
   }
 
