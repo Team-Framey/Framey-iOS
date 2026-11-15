@@ -11,6 +11,5 @@ public struct AppBarBrandTitle: View {
     Text("Framey")
       .typography(.enM24)
       .foregroundStyle(.framey(color))
-      .padding(.leading, 20)
   }
 }

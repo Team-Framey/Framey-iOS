@@ -14,6 +14,7 @@ public struct HomeView: View {
       AppBar(
         leading: {
           AppBarBrandTitle(color: .white)
+            .padding(.leading, 20)
         }
       )
 
