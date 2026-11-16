@@ -1,4 +1,5 @@
 import SwiftUI
+import UIKit
 
 public enum FrameyColor: Hashable, Sendable {
 
@@ -15,6 +16,8 @@ public enum FrameyColor: Hashable, Sendable {
 
   /// #090A0A / 10%
   case black10
+  /// #090A0A / 40%
+  case black40
   /// #090A0A / 70%
   case black70
 
@@ -78,6 +81,7 @@ public enum FrameyColor: Hashable, Sendable {
     case .white: .hex(0xFFFFFF)
     case .black: .hex(0x090A0A)
     case .black10: .hex(0x090A0A, opacity: 0.1)
+    case .black40: .hex(0x090A0A, opacity: 0.4)
     case .black70: .hex(0x090A0A, opacity: 0.7)
     case .gray50: .hex(0xFCFCFD)
     case .gray100: .hex(0xF3F4F6)
@@ -101,5 +105,9 @@ public enum FrameyColor: Hashable, Sendable {
     case .yellow: .hex(0xFFF4BF)
     case .kakaoBG: .hex(0xFEE500)
     }
+  }
+
+  public var uiColor: UIColor {
+    UIColor(color)
   }
 }
