@@ -1,7 +1,5 @@
 import SwiftUI
 
-// TODO: - 버튼 컴포넌트 관련 미흡한 부분 추후 반영
-// - horizontal padding
 public struct FrameySecondaryButtonStyle: ButtonStyle {
   @Environment(\.isEnabled) private var isEnabled
   @Environment(\.isLoading) private var isLoading
@@ -46,17 +44,13 @@ public struct FrameySecondaryButtonStyle: ButtonStyle {
     switch size {
     case .large: .titleSB18
     case .medium: .bodySB16
-    case .small: .bodySB16
-    case .xsmall: .bodySB16
     }
   }
 
   private var horizontalPadding: CGFloat {
     switch size {
-    case .large: FrameySpacing.s16.value
-    case .medium: FrameySpacing.s16.value
-    case .small: FrameySpacing.s16.value
-    case .xsmall: FrameySpacing.s12.value
+    case .large: FrameySpacing.s20.value
+    case .medium: FrameySpacing.s20.value
     }
   }
 
@@ -64,8 +58,6 @@ public struct FrameySecondaryButtonStyle: ButtonStyle {
     switch size {
     case .large: FrameySpacing.s16.value
     case .medium: FrameySpacing.s16.value
-    case .small: FrameySpacing.s16.value
-    case .xsmall: FrameySpacing.s12.value
     }
   }
 

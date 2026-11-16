@@ -3,7 +3,7 @@ import SwiftUI
 
 @ViewAction(for: LoginFeature.self)
 public struct LoginView: View {
-  public let store: StoreOf<LoginFeature>
+  @Bindable public var store: StoreOf<LoginFeature>
 
   public init(store: StoreOf<LoginFeature>) {
     self.store = store
@@ -36,5 +36,24 @@ public struct LoginView: View {
     .isLoading(store.isLoading)
     .frame(maxWidth: .infinity, maxHeight: .infinity)
     .background(.framey(.white))
+    .modal(
+      isPresented: $store.isSkipModalPresented,
+      title: "먼저 둘러볼까요?",
+      description: "비회원도 콜라주를 만들 수 있어요.\n보관함과 마이페이지는 로그인 후 이용 가능해요."
+    ) {
+      Button {
+        send(.skipCloseTapped)
+      } label: {
+        Text("로그인하기")
+          .frame(maxWidth: .infinity)
+      }
+
+      Button {
+        send(.skipConfirmTapped)
+      } label: {
+        Text("계속 둘러보기")
+          .frame(maxWidth: .infinity)
+      }
+    }
   }
 }
