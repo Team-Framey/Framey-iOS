@@ -23,18 +23,18 @@ public struct CarouselPageIndicator: View {
     }
   }
 
-  @Binding private var currentIndex: Int
+  private let currentIndex: Int
   private let totalCount: Int
   private let configuration: Configuration
 
   public init(
     configuration: Configuration = .init(),
-    currentIndex: Binding<Int>,
+    currentIndex: Int,
     totalCount: Int
   ) {
-    precondition(currentIndex.wrappedValue < totalCount && totalCount > 0)
+    precondition(currentIndex < totalCount && totalCount > 0)
     self.configuration = configuration
-    self._currentIndex = currentIndex
+    self.currentIndex = currentIndex
     self.totalCount = totalCount
   }
 
