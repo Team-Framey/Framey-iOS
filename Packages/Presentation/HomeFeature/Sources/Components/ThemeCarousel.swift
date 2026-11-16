@@ -45,7 +45,7 @@ private struct CarouselContent: View, Animatable {
   var body: some View {
     let center = Int(position.rounded())
     ZStack {
-      ForEach((center - 3)...(center + 3), id: \.self) { index in
+      ForEach((center - Metric.sideCardCount)...(center + Metric.sideCardCount), id: \.self) { index in
         let d = Double(index) - position
         let distance = abs(d)
         let theme = Theme.at(index)
@@ -69,6 +69,8 @@ private enum Metric {
   static let angle: Double = 16
   static let sideOpacity: Double = 0.8
   static let height: Double = 262
+  // 보이는 카드 양 방향 1장 + 스크린 밖 1장
+  static let sideCardCount: Int = 2
 }
 
 // MARK: - Theme+Index
