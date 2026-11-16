@@ -1,5 +1,6 @@
 import LoginFeature
 import MainTabFeature
+import OnboardingFeature
 import PresentationCore
 import SplashFeature
 import SwiftUI
@@ -19,6 +20,10 @@ public struct AppView: View {
 
       if let store = store.scope(\.content.mainTab, action: \.content.mainTab) {
         MainTabView(store: store)
+      }
+
+      if let store = store.scope(\.content.onboarding, action: \.content.onboarding) {
+        OnboardingView(store: store)
       }
 
       if let store = store.scope(\.content.splash, action: \.content.splash) {

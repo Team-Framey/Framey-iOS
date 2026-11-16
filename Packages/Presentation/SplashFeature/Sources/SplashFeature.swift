@@ -13,7 +13,7 @@ public struct SplashFeature {
     case view(View)
 
     public enum Delegate {
-      case completed
+      case completed(FrameyUser?)
     }
 
     public enum View {
@@ -35,7 +35,7 @@ public struct SplashFeature {
         return .run { [clock] send in
           // TODO: - 가짜 로딩 제거 및 앱 필수 데이터 요청으로 변경
           try? await clock.sleep(for: .seconds(2))
-          await send(.delegate(.completed), animation: .smooth)
+          await send(.delegate(.completed(nil)), animation: .smooth)
         }
       }
     }

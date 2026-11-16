@@ -1,5 +1,6 @@
 import LoginFeature
 import MainTabFeature
+import OnboardingFeature
 import PresentationCore
 import SplashFeature
 
@@ -9,12 +10,14 @@ public struct AppFeature {
   public enum Content {
     case login(LoginFeature)
     case mainTab(MainTabFeature)
+    case onboarding(OnboardingFeature)
     case splash(SplashFeature)
   }
 
   @ObservableState
   public struct State: Equatable {
     var content: Content.State
+    @Shared(.user) var user
 
     public init(
       content: Content.State = .splash(.init())
@@ -42,6 +45,9 @@ public struct AppFeature {
       case let .content(.mainTab(action)):
         return mainTab(&state, action)
 
+      case let .content(.onboarding(action)):
+        return onboarding(&state, action)
+
       case let .content(.splash(action)):
         return splash(&state, action)
       }
@@ -53,10 +59,9 @@ public struct AppFeature {
       return .none
     }
     switch action {
-    case .signInCompleted:
-      state.content = .mainTab(.init())
-      return .none
-      
+    case let .signInCompleted(user):
+      return userReceived(&state, user: user)
+
     case .signInSkipped:
       state.content = .mainTab(.init())
       return .none
@@ -68,16 +73,46 @@ public struct AppFeature {
     return .none
   }
 
+  private func onboarding(_ state: inout State, _ action: OnboardingFeature.Action) -> Effect<Action> {
+    guard case let .delegate(action) = action else {
+      return .none
+    }
+    switch action {
+    case .onboardingCompleted:
+      // TODO: - 필요 시 API 또는 UserDefaults 저장
+      state.$user.withLock {
+        $0?.hasSeenOnboarding = true
+      }
+      state.content = .mainTab(.init())
+      return .none
+    }
+  }
+
   private func splash(_ state: inout State, _ action: SplashFeature.Action) -> Effect<Action> {
     guard case let .delegate(action) = action else {
       return .none
     }
     switch action {
-    case .completed:
-      // TODO: - 인증 여부에 따라 Login/MainTab 으로 전환
-      state.content = .login(.init())
-      return .none
+    case let .completed(user):
+      guard let user else {
+        state.content = .login(.init())
+        return .none
+      }
+      return userReceived(&state, user: user)
     }
+  }
+
+  private func userReceived(_ state: inout State, user: FrameyUser) -> Effect<Action> {
+    state.$user.withLock {
+      $0 = user
+    }
+
+    if user.hasSeenOnboarding {
+      state.content = .mainTab(.init())
+    } else {
+      state.content = .onboarding(.init())
+    }
+    return .none
   }
 }
 
