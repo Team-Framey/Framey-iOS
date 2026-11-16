@@ -1,9 +1,7 @@
-public enum Theme: String, CaseIterable {
-  case simple = "SIMPLE"
-  case `default` = "DEFAULT"
-  case kitsch = "KITSCH"
+import PresentationCore
 
-  public var title: String {
+extension Theme {
+  var title: String {
     switch self {
     case .simple: "Simple"
     case .default: "Default"
@@ -11,7 +9,7 @@ public enum Theme: String, CaseIterable {
     }
   }
 
-  public var subtitle: String {
+  var subtitle: String {
     switch self {
     case .simple: "군더더기 없이 깔끔하게,\n사진 본연의 매력을 담은 프레임"
     case .default: "은은한 감성을 더해\n일상을 분위기 있게 담는 프레임"
