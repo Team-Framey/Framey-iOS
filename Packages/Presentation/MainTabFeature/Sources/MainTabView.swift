@@ -1,3 +1,4 @@
+import CollageCreateFeature
 import HomeFeature
 import LibraryFeature
 import PresentationCore
@@ -13,30 +14,40 @@ public struct MainTabView: View {
   }
 
   public var body: some View {
-    Group {
-      switch store.current {
-      case .home:
-        HomeView(
-          store: store.scope(\.home, action: \.tab.home)
-        )
+    NavigationStack(
+      path: $store.scope(\.path, action: \.path)
+    ) {
+      Group {
+        switch store.current {
+        case .home:
+          HomeView(
+            store: store.scope(\.home, action: \.tab.home)
+          )
 
-      case .library:
-        LibraryView(
-          store: store.scope(\.library, action: \.tab.library)
-        )
+        case .library:
+          LibraryView(
+            store: store.scope(\.library, action: \.tab.library)
+          )
 
-      case .profile:
-        ProfileView(
-          store: store.scope(\.profile, action: \.tab.profile)
+        case .profile:
+          ProfileView(
+            store: store.scope(\.profile, action: \.tab.profile)
+          )
+        }
+      }
+      .background(.white)
+      .overlay(alignment: .bottom) {
+        BottomNavigation(
+          items: MainTab.allCases,
+          selectedItem: $store.current
         )
       }
-    }
-    .background(.white)
-    .overlay(alignment: .bottom) {
-      BottomNavigation(
-        items: MainTab.allCases,
-        selectedItem: $store.current
-      )
+    } destination: { store in
+      switch store.case {
+      case let .collageCreate(store):
+        CollageCreateView(store: store)
+          .hideNavigationBar()
+      }
     }
   }
 }
