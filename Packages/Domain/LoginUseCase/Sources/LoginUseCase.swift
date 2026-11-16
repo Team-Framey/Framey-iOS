@@ -4,9 +4,9 @@ internal import LoginRepository
 @DependencyClient
 public struct LoginUseCase: Sendable {
   public var appleLoginRequest: @Sendable () async -> AsyncStream<Result<String, Error>> = { .finished }
-  public var appleLoginOnCompletion: @Sendable (Result<String, Error>) async throws -> AuthenticationPhase?
-  public var googleLoginRequest: @Sendable () async throws -> AuthenticationPhase?
-  public var kakaoLoginRequest: @Sendable () async throws -> AuthenticationPhase?
+  public var appleLoginOnCompletion: @Sendable (Result<String, Error>) async throws -> FrameyUser?
+  public var googleLoginRequest: @Sendable () async throws -> FrameyUser?
+  public var kakaoLoginRequest: @Sendable () async throws -> FrameyUser?
 }
 
 extension LoginUseCase: DependencyKey {
@@ -55,13 +55,25 @@ extension LoginUseCase: DependencyKey {
       }
     },
     appleLoginOnCompletion: { _ in
-      return .signInCompleted
+      return .init(
+        email: "apple@apple.com",
+        hasSeenOnboarding: false,
+        loginType: .apple
+      )
     },
     googleLoginRequest: {
-      return .signInCompleted
+      return .init(
+        email: "google@google.com",
+        hasSeenOnboarding: true,
+        loginType: .google
+      )
     },
     kakaoLoginRequest: {
-      return .signInCompleted
+      return .init(
+        email: "kakao@kakao.com",
+        hasSeenOnboarding: false,
+        loginType: .kakao
+      )
     }
   )
 }

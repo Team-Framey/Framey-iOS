@@ -18,6 +18,7 @@ let project = Project.make(
         .target(name: "SplashFeature"),
         .target(name: "LoginFeature"),
         .target(name: "MainTabFeature"),
+        .target(name: "OnboardingFeature"),
       ]
     ),
     .presentation(
@@ -45,6 +46,12 @@ let project = Project.make(
         .target(name: "HomeFeature"),
         .target(name: "LibraryFeature"),
         .target(name: "ProfileFeature"),
+      ]
+    ),
+    .presentation(
+      name: "OnboardingFeature",
+      dependencies: [
+        .target(name: "PresentationCore"),
       ]
     ),
     .presentation(

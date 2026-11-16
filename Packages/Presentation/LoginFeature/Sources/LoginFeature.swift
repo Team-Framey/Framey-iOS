@@ -18,12 +18,12 @@ public struct LoginFeature {
     case view(View)
 
     public enum Delegate {
-      case signInCompleted
+      case signInCompleted(FrameyUser)
       case signInSkipped
     }
 
     public enum Local {
-      case signInResponse(Result<AuthenticationPhase?, Error>)
+      case signInResponse(Result<FrameyUser?, Error>)
     }
 
     public enum View: BindableAction {
@@ -54,21 +54,13 @@ public struct LoginFeature {
       case .delegate:
         return .none
 
-      case let .local(.signInResponse(.success(phase))):
+      case let .local(.signInResponse(.success(user))):
         state.isLoading = false
-        guard let phase else {
-          // Phase가 없는 경우 로그인 취소
+        guard let user else {
+          // User가 없는 경우 로그인 취소
           return .none
         }
-
-        // TODO: - Phase를 따른 케이스 추가 + 로그인 처리
-        switch phase {
-        case .signInCompleted:
-          return .send(.delegate(.signInCompleted))
-
-        case .termsAgreementRequired:
-          return .send(.delegate(.signInCompleted))
-        }
+        return .send(.delegate(.signInCompleted(user)))
 
       case let .local(.signInResponse(.failure(error))):
         state.isLoading = false

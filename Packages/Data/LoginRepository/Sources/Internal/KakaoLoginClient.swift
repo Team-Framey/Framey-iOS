@@ -6,7 +6,7 @@ import SwiftUI
 
 @DependencyClient
 public struct KakaoLoginClient: Sendable {
-  public var request: @MainActor @Sendable () async throws -> AuthenticationPhase?
+  public var request: @MainActor @Sendable () async throws -> FrameyUser?
 }
 
 extension KakaoLoginClient: DependencyKey {

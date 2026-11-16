@@ -4,7 +4,7 @@ import DataCore
 @DependencyClient
 struct AppleLoginClient: Sendable {
   var request: @Sendable @MainActor () async -> AsyncStream<AppleLoginAction> = { .finished }
-  var onCompletion: @Sendable (Result<AppleLoginAuthorization, Error>) async throws -> AuthenticationPhase?
+  var onCompletion: @Sendable (Result<AppleLoginAuthorization, Error>) async throws -> FrameyUser?
 }
 
 extension AppleLoginClient: DependencyKey {
