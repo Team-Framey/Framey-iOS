@@ -3,6 +3,7 @@ import SwiftUI
 public enum FrameySpacing: Int, Hashable, Sendable {
   case s4 = 4
   case s8 = 8
+  case s10 = 10
   case s12 = 12
   case s16 = 16
   case s20 = 20
