@@ -6,6 +6,7 @@ public struct LoginFeature {
   @ObservableState
   public struct State: Equatable {
     var isLoading = false
+    var isSkipModalPresented = false
 
     public init() {}
   }
@@ -25,10 +26,13 @@ public struct LoginFeature {
       case signInResponse(Result<AuthenticationPhase?, Error>)
     }
 
-    public enum View {
+    public enum View: BindableAction {
       case appleLoginTapped
+      case binding(BindingAction<State>)
       case googleLoginTapped
       case kakaoLoginTapped
+      case skipCloseTapped
+      case skipConfirmTapped
       case skipTapped
     }
   }
@@ -44,6 +48,7 @@ public struct LoginFeature {
   public init() {}
 
   public var body: some ReducerOf<Self> {
+    BindingReducer(action: \.view)
     Reduce { state, action in
       switch action {
       case .delegate:
@@ -85,6 +90,9 @@ public struct LoginFeature {
           }
         }.cancellable(id: CancelID.apple, cancelInFlight: true)
 
+      case .view(.binding):
+        return .none
+
       case .view(.googleLoginTapped):
         guard !state.isLoading else {
           return .none
@@ -109,13 +117,25 @@ public struct LoginFeature {
           })))
         }.cancellable(id: CancelID.kakao, cancelInFlight: true)
 
+      case .view(.skipCloseTapped):
+        state.isSkipModalPresented = false
+        return .none
+
+      case .view(.skipConfirmTapped):
+        guard !state.isLoading else {
+          return .none
+        }
+        state.isSkipModalPresented = false
+        return .run { send in
+          await send(.delegate(.signInSkipped), animation: .default)
+        }
+
       case .view(.skipTapped):
         guard !state.isLoading else {
           return .none
         }
-        return .run { send in
-          await send(.delegate(.signInSkipped), animation: .default)
-        }
+        state.isSkipModalPresented = true
+        return .none
       }
     }
   }
