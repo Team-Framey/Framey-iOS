@@ -5,7 +5,7 @@ import SwiftUI
 struct OnboardingAppBar: View {
   let store: StoreOf<OnboardingFeature>
 
-  public var body: some View {
+  var body: some View {
     AppBar(
       leading: {
         AppBarIconButton(icon: .chevronLeft) {

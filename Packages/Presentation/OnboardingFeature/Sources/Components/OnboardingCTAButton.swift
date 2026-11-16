@@ -5,7 +5,7 @@ struct OnboardingCTAButton: View {
   let phase: OnboardingPhase
   let action: () -> Void
 
-  public var body: some View {
+  var body: some View {
     Button(action: action) {
       HStack(spacing: .s8) {
         if let icon {

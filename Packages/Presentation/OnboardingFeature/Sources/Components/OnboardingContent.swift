@@ -5,7 +5,7 @@ import SwiftUI
 struct OnboardingContent: View {
   let store: StoreOf<OnboardingFeature>
 
-  public var body: some View {
+  var body: some View {
     VStack(spacing: .zero) {
       ScrollViewReader { proxy in
         ScrollView(.horizontal) {
