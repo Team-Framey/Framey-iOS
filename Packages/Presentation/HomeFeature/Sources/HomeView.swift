@@ -10,7 +10,7 @@ public struct HomeView: View {
   }
 
   public var body: some View {
-    VStack {
+    VStack(spacing: 28) {
       AppBar(
         leading: {
           AppBarBrandTitle(color: .white)
@@ -18,13 +18,37 @@ public struct HomeView: View {
         }
       )
 
-      Text("Home")
-        .typography(.displaySB36)
-        .foregroundStyle(.framey(.primary100))
+      heroView()
+        .padding(.horizontal, .s20)
+        .padding(.bottom, 44)
 
-
-      Spacer()
+      ThemeCarousel()
     }
+    .frame(maxHeight: .infinity, alignment: .top)
     .frameyGradientBackground()
   }
+
+  private func heroView() -> some View {
+    VStack(spacing: .s16) {
+      ResoureKitAsset.appLogoGlass.image
+        .resizable()
+        .frame(width: 115.5, height: 115.5)
+
+      VStack(spacing: .s32) {
+        HomeIntroText()
+
+        PhotoSelectButton {
+          // TODO: - 버튼 선택 시 액션 연결
+        }
+      }
+    }
+  }
+}
+
+#Preview {
+  HomeView(
+    store: Store(initialState: HomeFeature.State()) {
+      HomeFeature()
+    }
+  )
 }
