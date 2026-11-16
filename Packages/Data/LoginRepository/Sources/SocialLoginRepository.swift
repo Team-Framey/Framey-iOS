@@ -5,9 +5,9 @@ import UIKit
 @DependencyClient
 public struct SocialLoginRepository: Sendable {
   public var appleLoginRequest: @Sendable () async -> AsyncStream<AppleLoginAction> = { .finished }
-  public var appleLoginOnCompletion: @Sendable (Result<AppleLoginAuthorization, Error>) async throws -> AuthenticationPhase?
-  public var googleLoginRequest: @Sendable (_ clientID: String) async throws -> AuthenticationPhase?
-  public var kakaoLoginRequest: @Sendable () async throws -> AuthenticationPhase?
+  public var appleLoginOnCompletion: @Sendable (Result<AppleLoginAuthorization, Error>) async throws -> FrameyUser?
+  public var googleLoginRequest: @Sendable (_ clientID: String) async throws -> FrameyUser?
+  public var kakaoLoginRequest: @Sendable () async throws -> FrameyUser?
 }
 
 extension SocialLoginRepository: DependencyKey {

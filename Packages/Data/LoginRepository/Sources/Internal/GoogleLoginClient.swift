@@ -7,7 +7,7 @@ public struct GoogleLoginClient: Sendable {
   public var request: @MainActor @Sendable (
     _ clientID: String,
     _ viewController: UIViewController
-  ) async throws -> AuthenticationPhase?
+  ) async throws -> FrameyUser?
 }
 
 extension GoogleLoginClient: DependencyKey {
