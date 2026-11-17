@@ -18,13 +18,20 @@ public struct LibraryView: View {
         }
       )
 
-      Text("Library")
-        .typography(.displaySB36)
-        .foregroundStyle(.framey(.gray900))
+      Spacer()
+
+      Button {
+        send(.createTapped)
+      } label: {
+        Text("콜라주 만들기")
+          .frame(maxWidth: .infinity)
+      }
+      .buttonStyle(.frameyNeutral(.large))
+      .padding(.horizontal, .s20)
 
       Spacer()
     }
     .frame(maxWidth: .infinity, maxHeight: .infinity)
-    .backgroundStyle(.framey(.white))
+    .background(.framey(.white))
   }
 }

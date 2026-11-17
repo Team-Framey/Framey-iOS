@@ -22,6 +22,12 @@ let project = Project.make(
       ]
     ),
     .presentation(
+      name: "CollageCreateFeature",
+      dependencies: [
+        .target(name: "PresentationCore"),
+      ]
+    ),
+    .presentation(
       name: "HomeFeature",
       dependencies: [
         .target(name: "PresentationCore"),
@@ -43,6 +49,7 @@ let project = Project.make(
     .presentation(
       name: "MainTabFeature",
       dependencies: [
+        .target(name: "CollageCreateFeature"),
         .target(name: "HomeFeature"),
         .target(name: "LibraryFeature"),
         .target(name: "ProfileFeature"),

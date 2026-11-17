@@ -1,3 +1,4 @@
+import CollageCreateFeature
 import HomeFeature
 import LibraryFeature
 import PresentationCore
@@ -5,11 +6,17 @@ import ProfileFeature
 
 @Reducer
 public struct MainTabFeature {
+  @Reducer
+  public enum Path {
+    case collageCreate(CollageCreateFeature)
+  }
+
   @ObservableState
   public struct State: Equatable {
     var current: MainTab
     var home: HomeFeature.State = .init()
     var library: LibraryFeature.State = .init()
+    var path: StackState<Path.State> = .init()
     var profile: ProfileFeature.State = .init()
 
     public init(
@@ -21,6 +28,7 @@ public struct MainTabFeature {
 
   @CasePathable
   public enum Action: ViewAction {
+    case path(StackActionOf<Path>)
     case tab(Tab)
     case view(View)
 
@@ -50,7 +58,36 @@ public struct MainTabFeature {
       ProfileFeature()
     }
     Reduce { state, action in
+      switch action {
+      case .path:
+        return .none
+
+      case .tab(.home):
+        return .none
+
+      case let .tab(.library(action)):
+        return library(&state, action)
+
+      case .tab(.profile):
+        return .none
+
+      case .view(.binding):
+        return .none
+      }
+    }
+    .forEach(\.path, action: \.path)
+  }
+
+  private func library(_ state: inout State, _ action: LibraryFeature.Action) -> Effect<Action> {
+    guard case let .delegate(action) = action else {
+      return .none
+    }
+    switch action {
+    case .createTapped:
+      state.path.append(.collageCreate(.init()))
       return .none
     }
   }
 }
+
+extension MainTabFeature.Path.State: Equatable {}
