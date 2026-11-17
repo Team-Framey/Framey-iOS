@@ -1,9 +1,10 @@
+import PhotosUI
 import PresentationCore
 import SwiftUI
 
 @ViewAction(for: CollageCreateFeature.self)
 struct CollageCreateContent: View {
-  let store: StoreOf<CollageCreateFeature>
+  @Bindable var store: StoreOf<CollageCreateFeature>
 
   var body: some View {
     ScrollView {
@@ -11,10 +12,16 @@ struct CollageCreateContent: View {
         CollageCreateSection(title: "사진") {
           ScrollView(.horizontal) {
             HStack(spacing: .s8) {
-              // TODO: - 사진 UI 추가
-              ForEach(0..<10, id: \.self) { index in
-                CollageCreatePhotoRow {
-                  // TODO: - Delete
+              CollageCreatePhotoAddButton(
+                count: store.photoItems.count,
+                totalCount: store.maximumPhotoCount
+              ) {
+                send(.addTapped)
+              }
+
+              ForEach(store.selectedPhotos) { photo in
+                CollageCreatePhotoRow(photo: photo) {
+                  send(.photoDeleteTapped(photo.item))
                 }
               }
             }
@@ -30,7 +37,7 @@ struct CollageCreateContent: View {
         ) {
           VStack(spacing: .s8) {
             ForEach(Theme.allCases) { theme in
-              CollageCreateThemeRow(
+              CollageThemeRow(
                 theme: theme,
                 isSelected: store.theme == theme
               ) {
@@ -44,5 +51,11 @@ struct CollageCreateContent: View {
     }
     .scrollIndicators(.hidden)
     .contentFog(.bottom, .s20)
+    .photosPicker(
+      isPresented: $store.isPhotoPickerPresented,
+      selection: $store.photoItems,
+      maxSelectionCount: store.maximumPhotoCount,
+      matching: .images
+    )
   }
 }
