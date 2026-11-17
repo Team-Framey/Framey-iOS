@@ -1,6 +1,6 @@
-import Foundation
+import PhotosUI
 import PresentationCore
-import struct _PhotosUI_SwiftUI.PhotosPickerItem
+import SwiftUI
 
 @Reducer
 public struct CollageCreateFeature {
