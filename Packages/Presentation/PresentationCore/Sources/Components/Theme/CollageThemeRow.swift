@@ -1,12 +1,25 @@
-import PresentationCore
+import DesignSystem
+import Entity
 import SwiftUI
 
-struct CollageCreateThemeRow: View {
-  let theme: Theme
-  let isSelected: Bool
-  let action: () -> Void
-  
-  var body: some View {
+// TODO: - 테마 이미지 추가
+
+public struct CollageThemeRow: View {
+  public let theme: Theme
+  public let isSelected: Bool
+  public let action: () -> Void
+
+  public init(
+    theme: Theme,
+    isSelected: Bool,
+    action: @escaping () -> Void
+  ) {
+    self.theme = theme
+    self.isSelected = isSelected
+    self.action = action
+  }
+
+  public var body: some View {
     Button(action: action) {
       VStack(alignment: .leading, spacing: .s8) {
         Text(title)
