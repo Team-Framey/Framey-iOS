@@ -68,7 +68,9 @@ public enum FrameyColor: Hashable, Sendable {
   // MARK: - Sub
 
   /// #FFF4BF
-  case yellow
+  case yellow01
+  /// #FFE772
+  case yellow02
 
   // MARK: - ETC
 
@@ -102,7 +104,8 @@ public enum FrameyColor: Hashable, Sendable {
     case .primary700: .hex(0x0075AD)
     case .primary800: .hex(0x005984)
     case .primary900: .hex(0x003D5C)
-    case .yellow: .hex(0xFFF4BF)
+    case .yellow01: .hex(0xFFF4BF)
+    case .yellow02: .hex(0xFFE772)
     case .kakaoBG: .hex(0xFEE500)
     }
   }
