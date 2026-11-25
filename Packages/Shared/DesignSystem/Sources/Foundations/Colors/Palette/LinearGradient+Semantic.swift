@@ -9,7 +9,7 @@ extension LinearGradient {
     Self(
       stops: [
         .init(color: .framey(.primary500), location: 0.58),
-        .init(color: .framey(.yellow), location: 1),
+        .init(color: .framey(.yellow01), location: 1),
       ],
       startPoint: startPoint,
       endPoint: endPoint

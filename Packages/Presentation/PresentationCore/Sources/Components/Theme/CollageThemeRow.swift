@@ -70,7 +70,7 @@ public struct CollageThemeRow: View {
     switch theme {
     case .simple: FrameyColor.gray100.color
     case .default: Color.hex(0xB9EBFE)
-    case .kitsch: FrameyColor.yellow.color
+    case .kitsch: FrameyColor.yellow01.color
     }
   }
 }
