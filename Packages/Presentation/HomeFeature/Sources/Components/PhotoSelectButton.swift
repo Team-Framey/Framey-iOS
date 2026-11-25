@@ -3,6 +3,7 @@ import SwiftUI
 
 struct PhotoSelectButton: View {
   private let action: () -> Void
+  private let title = "사진 선택하기"
 
   init(action: @escaping () -> Void) {
     self.action = action
@@ -10,22 +11,31 @@ struct PhotoSelectButton: View {
 
   var body: some View {
     Button(action: action) {
-      Text("사진 선택하기")
+      Text(title)
         .foregroundStyle(.framey(.white))
         .typography(.bodySB16)
         .padding(.horizontal, 21)
         .padding(.vertical, 14)
-        // glassEffect는 26.0 이상만 가능하므로 커스텀
-        .background {
-          backgroundView()
-        }
-        .overlay {
-          overlayView()
-        }
     }
+    .buttonStyle(PhotoSelectButtonStyle())
+  }
+}
+
+private struct PhotoSelectButtonStyle: ButtonStyle {
+  func makeBody(configuration: Configuration) -> some View {
+    let isPressed = configuration.isPressed
+    return configuration.label
+      .background {
+        backgroundView(isPressed: isPressed)
+      }
+      .overlay {
+        overlayView()
+      }
+      .scaleEffect(isPressed ? 1.08 : 1)
+      .animation(.interactiveSpring(response: 0.22, dampingFraction: 0.75), value: isPressed)
   }
 
-  private func backgroundView() -> some View {
+  private func backgroundView(isPressed: Bool) -> some View {
     ZStack {
       Capsule().fill(
         Color.hex(0x8C8C8C, opacity: 0.25)
@@ -36,8 +46,13 @@ struct PhotoSelectButton: View {
             )
           )
       )
+
       Capsule().fill(Color.hex(0x171717))
         .blendMode(.plusLighter)
+
+      Capsule()
+        .fill(.framey(.white))
+        .opacity(isPressed ? 0.15 : 0)
     }
   }
 
