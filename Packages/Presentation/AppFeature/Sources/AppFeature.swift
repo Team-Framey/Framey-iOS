@@ -69,8 +69,19 @@ public struct AppFeature {
   }
 
   private func mainTab(_ state: inout State, _ action: MainTabFeature.Action) -> Effect<Action> {
-    // TODO: - MainTab Delegate Action 처리
-    return .none
+    guard case let .delegate(action) = action else {
+      return .none
+    }
+    switch action {
+    case .loginRequested:
+      state.content = .login(.init())
+      return .none
+
+    case .logoutConfirmed:
+      state.$user.withLock { $0 = nil }
+      state.content = .login(.init())
+      return .none
+    }
   }
 
   private func onboarding(_ state: inout State, _ action: OnboardingFeature.Action) -> Effect<Action> {
