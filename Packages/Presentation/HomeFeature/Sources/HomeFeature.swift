@@ -9,8 +9,8 @@ public struct HomeFeature {
 
   @CasePathable
   public enum Action: ViewAction {
-    case view(View)
     case delegate(Delegate)
+    case view(View)
 
     public enum Delegate {
       case selectTapped
