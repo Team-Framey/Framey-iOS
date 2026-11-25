@@ -38,7 +38,7 @@ public struct HomeView: View {
         HomeIntroText()
 
         PhotoSelectButton {
-          // TODO: - 버튼 선택 시 액션 연결
+          send(.selectTapped)
         }
       }
     }

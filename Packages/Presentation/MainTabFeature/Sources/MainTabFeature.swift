@@ -62,8 +62,8 @@ public struct MainTabFeature {
       case .path:
         return .none
 
-      case .tab(.home):
-        return .none
+      case let .tab(.home(action)):
+        return home(&state, action)
 
       case let .tab(.library(action)):
         return library(&state, action)
@@ -76,6 +76,17 @@ public struct MainTabFeature {
       }
     }
     .forEach(\.path, action: \.path)
+  }
+
+  private func home(_ state: inout State, _ action: HomeFeature.Action) -> Effect<Action> {
+    guard case let .delegate(action) = action else {
+      return .none
+    }
+    switch action {
+    case .selectTapped:
+      state.path.append(.collageCreate(.init()))
+      return .none
+    }
   }
 
   private func library(_ state: inout State, _ action: LibraryFeature.Action) -> Effect<Action> {
