@@ -1,4 +1,5 @@
 import PresentationCore
+import SwiftUI
 
 extension Theme {
   var title: String {
@@ -17,5 +18,11 @@ extension Theme {
     }
   }
 
-  // TODO: - 테마별 미리보기 이미지
+  var backgroundImage: Image {
+    switch self {
+    case .simple: ResoureKitAsset.themePreviewSimple.image
+    case .default: ResoureKitAsset.themePreviewDefault.image
+    case .kitsch: ResoureKitAsset.themePreviewKitsch.image
+    }
+  }
 }

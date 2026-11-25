@@ -50,7 +50,11 @@ private struct CarouselContent: View, Animatable {
         let distance = abs(d)
         let theme = Theme.at(index)
 
-        ThemeCard(title: theme.title, description: theme.subtitle)
+        ThemeCard(
+          title: theme.title,
+          description: theme.subtitle,
+          backgroundImage: theme.backgroundImage
+        )
           .rotationEffect(.degrees(max(-1, min(1, d)) * Metric.angle))
           .offset(x: d * Metric.spacing, y: min(distance, 1) * Metric.drop)
           .opacity(1 - (1 - Metric.sideOpacity) * min(distance, 1))
