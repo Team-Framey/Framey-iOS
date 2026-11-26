@@ -4,6 +4,8 @@ import PresentationCore
 public struct LibraryFeature {
   @ObservableState
   public struct State: Equatable {
+    var items: [LibraryItem] = []
+
     public init() {}
   }
 
