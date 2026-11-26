@@ -10,7 +10,6 @@ struct ProfileAccountSection: View {
   var body: some View {
     VStack(alignment: .leading, spacing: .s20) {
       Text("계정")
-        .tracking(-0.18)
         .typography(.titleSB18)
         .foregroundStyle(.framey(.gray800))
         .frame(minHeight: 23)
@@ -67,8 +66,7 @@ private struct ProfileLogoutButton: View {
     Button(action: action) {
       HStack {
         Text("로그아웃")
-          .tracking(-0.64)
-          .typography(.bodyM16)
+          .typography(.bodyM16Tight)
           .foregroundStyle(.framey(.gray900))
 
         Spacer()
@@ -92,10 +90,9 @@ private struct ProfileWithdrawalButton: View {
   var body: some View {
     Button(action: action) {
       Text("회원 탈퇴")
-        .underline()
-        .tracking(-0.64)
-        .typography(.bodyM16)
+        .typography(.bodyM16Tight)
         .foregroundStyle(Color.hex(0x4C4C4C))
+        .underline()
         .frame(minHeight: 44)
     }
     .buttonStyle(.plain)

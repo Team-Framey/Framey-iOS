@@ -10,8 +10,9 @@ private struct TypographyModifier: ViewModifier {
   let typography: Typography
 
   func body(content: Content) -> some View {
-    // TODO: - Line Height, Letter Spacing 반영
+    // TODO: - Line Height 반영
     content
       .font(typography.font)
+      .tracking(typography.tracking)
   }
 }

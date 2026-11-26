@@ -10,8 +10,7 @@ struct ProfileAccountIdentityRow: View {
         .accessibilityHidden(true)
 
       Text(user.email)
-        .tracking(-0.48)
-        .typography(.enM16)
+        .typography(.enM16Tight)
         .foregroundStyle(.framey(.gray900))
         .lineLimit(1)
         .truncationMode(.middle)
@@ -30,36 +29,30 @@ struct ProfileAccountIdentityRow: View {
   }
 
   private var accountIcon: some View {
-    ZStack {
-      let backgroundColor: FrameyColor = switch user.loginType {
-      case .apple: .gray900
-      case .google: .white
-      case .kakao: .kakaoBG
-      }
-
-      Circle()
-        .fill(.framey(backgroundColor))
-
-      switch user.loginType {
-      case .apple:
-        ResoureKitAsset.appleIcon.image
-          .resizable()
-          .scaledToFit()
-          .frame(width: 16, height: 16)
-
-      case .google:
-        ResoureKitAsset.googleIcon.image
-          .resizable()
-          .scaledToFit()
-          .frame(width: 16, height: 16)
-
-      case .kakao:
-        ResoureKitAsset.kakaoIcon.image
+    Circle()
+      .fill(.framey(accountBackgroundColor))
+      .frame(width: 26, height: 26)
+      .overlay {
+        accountImage
           .resizable()
           .scaledToFit()
           .frame(width: 16, height: 16)
       }
+  }
+
+  private var accountBackgroundColor: FrameyColor {
+    switch user.loginType {
+    case .apple: .gray900
+    case .google: .white
+    case .kakao: .kakaoBG
     }
-    .frame(width: 26, height: 26)
+  }
+
+  private var accountImage: Image {
+    switch user.loginType {
+    case .apple: ResoureKitAsset.appleIcon.image
+    case .google: ResoureKitAsset.googleIcon.image
+    case .kakao: ResoureKitAsset.kakaoIcon.image
+    }
   }
 }

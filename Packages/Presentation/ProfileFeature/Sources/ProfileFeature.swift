@@ -5,8 +5,22 @@ public struct ProfileFeature {
   @ObservableState
   public struct State: Equatable {
     var dialog: Dialog?
-    @Shared(.appStorage("profileNotificationsEnabled")) var isNotificationEnabled = true
+    @Shared(.profileNotificationsEnabled) private var storedNotificationPreference
     @SharedReader(.user) var user
+
+    var isNotificationEnabled: Bool {
+      get { storedNotificationPreference }
+      set { $storedNotificationPreference.withLock { $0 = newValue } }
+    }
+
+    var isDialogPresented: Bool {
+      get { dialog != nil }
+      set {
+        if !newValue {
+          dialog = nil
+        }
+      }
+    }
 
     public init() {}
   }
@@ -26,12 +40,12 @@ public struct ProfileFeature {
       case logoutConfirmed
     }
 
-    public enum View {
+    public enum View: BindableAction {
+      case binding(BindingAction<State>)
       case dialogConfirmTapped
       case dialogDismissed
       case loginTapped
       case logoutTapped
-      case notificationChanged(Bool)
       case withdrawalTapped
     }
   }
@@ -39,9 +53,13 @@ public struct ProfileFeature {
   public init() {}
 
   public var body: some ReducerOf<Self> {
+    BindingReducer(action: \.view)
     Reduce { state, action in
       switch action {
       case .delegate:
+        return .none
+
+      case .view(.binding):
         return .none
 
       case .view(.dialogConfirmTapped):
@@ -64,10 +82,6 @@ public struct ProfileFeature {
 
       case .view(.logoutTapped):
         state.dialog = .logout
-        return .none
-
-      case let .view(.notificationChanged(isEnabled)):
-        state.$isNotificationEnabled.withLock { $0 = isEnabled }
         return .none
 
       case .view(.withdrawalTapped):

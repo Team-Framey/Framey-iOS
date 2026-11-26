@@ -3,7 +3,7 @@ import SwiftUI
 
 @ViewAction(for: ProfileFeature.self)
 public struct ProfileView: View {
-  public let store: StoreOf<ProfileFeature>
+  @Bindable public var store: StoreOf<ProfileFeature>
 
   public init(store: StoreOf<ProfileFeature>) {
     self.store = store
@@ -20,10 +20,7 @@ public struct ProfileView: View {
         ScrollView {
           ProfileAccountSection(
             user: user,
-            isNotificationEnabled: Binding(
-              get: { store.isNotificationEnabled },
-              set: { send(.notificationChanged($0)) }
-            ),
+            isNotificationEnabled: $store.isNotificationEnabled,
             onLogout: { send(.logoutTapped) },
             onWithdrawal: { send(.withdrawalTapped) }
           )
@@ -41,14 +38,7 @@ public struct ProfileView: View {
     }
     .frame(maxWidth: .infinity, maxHeight: .infinity)
     .background(.framey(user == nil ? .gray100 : .white))
-    .modal(isPresented: Binding(
-      get: { store.dialog != nil },
-      set: { isPresented in
-        if !isPresented {
-          send(.dialogDismissed)
-        }
-      }
-    )) {
+    .modal(isPresented: $store.isDialogPresented) {
       if let dialog {
         ProfileConfirmationModal(
           dialog: dialog,

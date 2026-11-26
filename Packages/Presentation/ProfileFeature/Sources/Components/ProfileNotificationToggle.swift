@@ -7,8 +7,7 @@ struct ProfileNotificationToggle: View {
   var body: some View {
     Toggle(isOn: $isOn) {
       Text("알림 설정")
-        .tracking(-0.64)
-        .typography(.bodyM16)
+        .typography(.bodyM16Tight)
         .foregroundStyle(.framey(.gray900))
     }
     .toggleStyle(ProfileNotificationToggleStyle())
