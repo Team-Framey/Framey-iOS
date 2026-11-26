@@ -25,8 +25,8 @@ public struct BottomNavigationButton: View {
         .image
         .resizable()
         .scaledToFit()
-        .frame(width: 28, height: 28)
-        .padding(8)
+        .frame(width: BottomNavigationMetric.iconSize, height: BottomNavigationMetric.iconSize)
+        .padding(BottomNavigationMetric.iconPadding)
     }
     .buttonStyle(BottomNavigationItemButtonStyle(isSelected: isSelected))
   }
