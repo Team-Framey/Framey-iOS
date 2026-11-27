@@ -10,28 +10,39 @@ public struct LibraryView: View {
   }
 
   public var body: some View {
-    VStack {
-      AppBar(
-        leading: {
-          AppBarBrandTitle(color: .primary500)
-            .padding(.leading, 20)
-        }
-      )
+    VStack(spacing: 0) {
+      appBar()
 
-      Spacer()
-
-      Button {
-        send(.createTapped)
-      } label: {
-        Text("콜라주 만들기")
-          .frame(maxWidth: .infinity)
-      }
-      .buttonStyle(.frameyNeutral(.large))
-      .padding(.horizontal, .s20)
-
-      Spacer()
+      content()
     }
     .frame(maxWidth: .infinity, maxHeight: .infinity)
     .background(.framey(.white))
+  }
+
+  @ViewBuilder
+  private func appBar() -> some View {
+    if store.items.isEmpty {
+      AppBar(leading: {
+        AppBarBrandTitle(color: .primary500)
+          .padding(.leading, .s20)
+      })
+    } else {
+      AppBar(center: {
+        AppBarTitle("보관함")
+      })
+    }
+  }
+
+  @ViewBuilder
+  private func content() -> some View {
+    if store.items.isEmpty {
+      LibraryEmptyContent {
+        send(.createTapped)
+      }
+      .bottomNavigationPadding()
+    } else {
+      LibraryGrid(items: store.items)
+        .bottomNavigationContentMargins()
+    }
   }
 }

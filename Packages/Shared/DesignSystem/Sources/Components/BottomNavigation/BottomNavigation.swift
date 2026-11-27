@@ -30,7 +30,7 @@ public struct BottomNavigation<Item: BottomNavigationItem>: View {
           }
       }
     }
-    .padding(.vertical, 16)
+    .padding(.vertical, BottomNavigationMetric.verticalPadding)
     .padding(.horizontal, 12)
     .background(.framey(.white).opacity(0.8), in: .capsule)
     .shadow(
