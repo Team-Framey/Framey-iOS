@@ -7,8 +7,11 @@ struct CollageCard: View {
   let dateText: String
 
   var body: some View {
-    CollageThumbnail(url: thumbnailURL)
+    Color.clear
       .aspectRatio(112.0 / 180.0, contentMode: .fit)
+      .overlay {
+        CollageThumbnail(url: thumbnailURL)
+      }
       .overlay(alignment: .bottom) {
         info()
       }
@@ -28,14 +31,7 @@ struct CollageCard: View {
     .padding(.s8)
     .frame(height: 56)
     .background {
-      LinearGradient(
-        colors: [
-          Color.hex(0x101010).opacity(0),
-          Color.hex(0x101010).opacity(1)
-        ],
-        startPoint: .top,
-        endPoint: .bottom
-      )
+      ContentFog(direction: .up, color: .hex(0x101010))
     }
   }
 }
