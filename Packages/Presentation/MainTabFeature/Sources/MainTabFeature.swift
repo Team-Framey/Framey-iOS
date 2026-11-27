@@ -28,9 +28,15 @@ public struct MainTabFeature {
 
   @CasePathable
   public enum Action: ViewAction {
+    case delegate(Delegate)
     case path(StackActionOf<Path>)
     case tab(Tab)
     case view(View)
+
+    public enum Delegate {
+      case loginRequested
+      case logoutConfirmed
+    }
 
     @CasePathable
     public enum Tab {
@@ -59,6 +65,9 @@ public struct MainTabFeature {
     }
     Reduce { state, action in
       switch action {
+      case .delegate:
+        return .none
+
       case .path:
         return .none
 
@@ -68,8 +77,8 @@ public struct MainTabFeature {
       case let .tab(.library(action)):
         return library(&state, action)
 
-      case .tab(.profile):
-        return .none
+      case let .tab(.profile(action)):
+        return profile(action)
 
       case .view(.binding):
         return .none
@@ -97,6 +106,19 @@ public struct MainTabFeature {
     case .createTapped:
       state.path.append(.collageCreate(.init()))
       return .none
+    }
+  }
+
+  private func profile(_ action: ProfileFeature.Action) -> Effect<Action> {
+    guard case let .delegate(action) = action else {
+      return .none
+    }
+    switch action {
+    case .loginRequested:
+      return .send(.delegate(.loginRequested))
+
+    case .logoutConfirmed:
+      return .send(.delegate(.logoutConfirmed))
     }
   }
 }
