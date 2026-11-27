@@ -15,7 +15,7 @@ private struct BottomNavigationContentMarginsModifier: ViewModifier {
     content
       .contentMargins(
         .bottom,
-        BottomNavigationMetric.height + FrameySpacing.s16.value,
+        BottomNavigationMetric.height + FrameySpacing.s20.value,
         for: .scrollContent
       )
       .contentMargins(
